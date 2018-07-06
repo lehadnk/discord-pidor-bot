@@ -78,9 +78,10 @@ exports.canStartGame = function(db, msg) {
 
 exports.register = function(db, msg) {
     db.get(
-        "SELECT count(id) as cnt FROM participants WHERE discord_guild_id = ?1",
+        "SELECT count(id) as cnt FROM participants WHERE discord_user_id = ?1 AND discord_guild_id = ?2",
         {
-            1: msg.author.id
+            1: msg.author.id,
+            2: msg.guild.id
         },
         (err, row) => {
             console.log(err);
