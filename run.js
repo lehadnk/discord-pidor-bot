@@ -8,7 +8,7 @@ const DiscordClient = new DiscordJS.Client();
 const db = new sqlite3.Database('database.db3');
 
 DiscordClient.on('message', msg => {
-    if (msg.content.match(/^!пидордня/)) {
+    if (msg.content.match(/^!пидордня/) || msg.content.match(/^!пидорня/)) {
         pidorGame.register(db, msg);
         chatFunctions.deleteMessage(msg, 2000);
         return;
