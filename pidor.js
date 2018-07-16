@@ -44,7 +44,7 @@ const resultPhrases = [
     'И прекрасный человек дня сегодня... а нет, ошибка, всего-лишь пидор - ',
 ];
 
-var getRandomElement = function(array) {
+let getRandomElement = function(array) {
     return array[Math.floor(Math.random() * array.length)];
 }
 
