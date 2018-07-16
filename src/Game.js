@@ -48,14 +48,26 @@ class Game {
     }
 
     async CanStartGame(guild_id) {
-        return this.dbAdapter.get(
-            "SELECT g.datetime, p.discord_user_name FROM games g JOIN participants p ON p.id = g.winner_participant_id WHERE g.discord_guild_id = ?1 ORDER BY datetime DESC",
-            {
-                1: guild_id
-            }
-        ).then(result => {
-            return result === undefined;
+        return new Promise((resolve, reject) => {
+            return this.dbAdapter.get(
+                "SELECT g.datetime, p.discord_user_name FROM games g JOIN participants p ON p.id = g.winner_participant_id WHERE g.discord_guild_id = ?1 ORDER BY datetime DESC",
+                {
+                    1: guild_id
+                }
+            ).then(result => {
+                if (result === undefined) {
+                    resolve(true);
+                }
+
+                if (result.datetime > Math.floor(Date.now() / 1000) - 86400) {
+                    reject(result.discord_user_name);
+                    return;
+                }
+
+                resolve(true);
+            });
         });
+
     }
 
     async Tease(channel) {
@@ -76,11 +88,17 @@ class Game {
                     return;
                 }
 
-                this.gamesRepository.SaveGameInformation(participant.id, guild_id);
+                this.gamesRepository.SaveGameInformation(guild_id, participant.id);
                 this.participantRepository.ScoreParticipant(participant.id);
                 resolve(Misc.GetRandomElement(resultPhrases) + "<@" + participant.discord_user_id+">");
             });
         });
+    }
+
+    GetLastWinner() {
+        return this.dbAdapter.get(
+            ""
+        )
     }
 
     GetStats(guild_id) {

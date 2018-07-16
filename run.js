@@ -32,16 +32,17 @@ DiscordClient.on('message', msg => {
     }
 
     if (msg.content.match(/^!ктопидор/)) {
-        if (!game.CanStartGame(msg.guild.id)) {
-            msg.channel.send("А пидор сегодня - " + name);
-        } else {
+        game.CanStartGame(msg.guild.id).then(() => {
             game.Run(msg.guild.id).then(async winMsg => {
                 await game.Tease(msg.channel).then();
                 msg.channel.send(winMsg);
             }, reject => {
                 ChatFunctions.temporaryMessage(msg.channel, reject, 8000);
             });
-        }
+        }, reject => {
+            msg.channel.send("А пидор сегодня - " + reject);
+        });
+
         ChatFunctions.deleteMessage(msg, 1000);
     }
 
