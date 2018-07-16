@@ -75,7 +75,7 @@ class Game {
         await Misc.AsyncForEach(phrases, async p => {
             await Misc.Sleep(2500 + Math.random() * 5500).then(() => {
                 channel.send(p);
-            }).catch(e => console.log(e));
+            });
         });
         await Misc.Sleep(3500 + Math.random() * 2500)
     }
@@ -95,28 +95,23 @@ class Game {
         });
     }
 
-    GetLastWinner() {
-        return this.dbAdapter.get(
-            ""
-        )
-    }
-
     GetStats(guild_id) {
-        return this
-            .dbAdapter
-            .all(
-                "SELECT discord_user_name, score FROM participants WHERE score > 0 AND discord_guild_id = ?1 ORDER BY score DESC LIMIT 10",
-                {
-                    1: guild_id,
-                })
-            .then(rows => {
-                let string = "**Топ-10 пидоров за все время:**\n";
-                rows.forEach((row) => {
-                    string += row.discord_user_name+" - "+row.score+"\n";
-                });
+        return new Promise(resolve => {
+            this.dbAdapter
+                .all(
+                    "SELECT discord_user_name, score FROM participants WHERE score > 0 AND discord_guild_id = ?1 ORDER BY score DESC LIMIT 10",
+                    {
+                        1: guild_id,
+                    })
+                .then(rows => {
+                    let string = "**Топ-10 пидоров за все время:**\n";
+                    rows.forEach((row) => {
+                        string += row.discord_user_name+" - " + row.score + "\n";
+                    });
 
-                return string;
-            });
+                    resolve(string);
+                });
+        });
     }
 }
 

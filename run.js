@@ -47,7 +47,7 @@ DiscordClient.on('message', msg => {
     }
 
     if (msg.content.match(/^!топпидоров/)) {
-        game.GetStats(msg.channel.id).then(message => {
+        game.GetStats(msg.guild.id).then(message => {
             ChatFunctions.temporaryMessage(msg.channel, message, 15000);
         });
         ChatFunctions.deleteMessage(msg, 1000);
