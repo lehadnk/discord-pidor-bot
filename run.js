@@ -1,10 +1,11 @@
 "use strict";
+require('dotenv').config();
 const DiscordJS = require("discord.js");
 const sqlite3 = require("sqlite3");
 const DiscordClient = new DiscordJS.Client();
 const ChatFunctions = require("./src/ChatFunctions");
-const GamesRepository = require("./src/GamesRepository");
-const ParticipantRepository = require("./src/ParticipantRepository");
+const GamesRepository = require("./src/Repositories/GamesRepository");
+const ParticipantRepository = require("./src/Repositories/ParticipantRepository");
 const Game = require("./src/Game");
 const DbAdapter = require("./src/DbAdapter");
 

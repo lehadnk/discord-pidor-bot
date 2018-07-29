@@ -49,25 +49,21 @@ class Game {
 
     async CanStartGame(guild_id) {
         return new Promise((resolve, reject) => {
-            return this.dbAdapter.get(
-                "SELECT g.datetime, p.discord_user_name FROM games g JOIN participants p ON p.id = g.winner_participant_id WHERE g.discord_guild_id = ?1 ORDER BY datetime DESC",
-                {
-                    1: guild_id
-                }
-            ).then(result => {
-                if (result === undefined) {
+            this.gamesRepository
+                .GetLastGame(guild_id)
+                .then(game => {
+                    if (game === undefined) {
+                        resolve(true);
+                    }
+
+                    if (game.datetime > Math.floor(Date.now() / 1000) - 86400) {
+                        reject(game.discord_user_name);
+                        return;
+                    }
+
                     resolve(true);
-                }
-
-                if (result.datetime > Math.floor(Date.now() / 1000) - 86400) {
-                    reject(result.discord_user_name);
-                    return;
-                }
-
-                resolve(true);
-            });
+                });
         });
-
     }
 
     async Tease(channel) {

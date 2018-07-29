@@ -1,7 +1,7 @@
-let DbAdapter = require('./DbAdapter.js');
-let ParticipantRepository = require('./ParticipantRepository');
-let GamesRepository = require('./GamesRepository');
-let Game = require('./Game');
+let DbAdapter = require('./src/DbAdapter.js');
+let ParticipantRepository = require('./src/Repositories/ParticipantRepository');
+let GamesRepository = require('./src/Repositories/GamesRepository');
+let Game = require('./src/Game');
 
 let sqlite3 = require('sqlite3').verbose();
 let db = new sqlite3.Database('../database.db3');

@@ -1,4 +1,4 @@
-class ParticipantRepository {
+class ParticipantsRepository {
 
     constructor(dbAdapter) {
         this.dbAdapter = dbAdapter;
@@ -50,4 +50,4 @@ class ParticipantRepository {
     }
 }
 
-module.exports = ParticipantRepository;
+module.exports = ParticipantsRepository;
