@@ -84,10 +84,9 @@ class Game {
                     return;
                 }
 
-                resolve(Misc.GetRandomElement(resultPhrases) + "<@" + participant.discord_user_id+">").then(() => {
-                    this.gamesRepository.SaveGameInformation(guild_id, participant.id);
-                    this.participantRepository.ScoreParticipant(participant.id);
-                });
+                this.gamesRepository.SaveGameInformation(guild_id, participant.id);
+                this.participantRepository.ScoreParticipant(participant.id);
+                resolve(Misc.GetRandomElement(resultPhrases) + "<@" + participant.discord_user_id+">");
             });
         });
     }
