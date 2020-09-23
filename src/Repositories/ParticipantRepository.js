@@ -31,6 +31,16 @@ class ParticipantsRepository {
         );
     }
 
+    RemoveParticipant(user_id, guild_id) {
+        this.dbAdapter.run(
+            "DELETE FROM participants WHERE discord_user_id = ?1 AND discord_guild_id = ?2",
+            {
+                1: user_id,
+                2: guild_id
+            }
+        );
+    }
+
     IsParticipantExists(user_id, guild_id) {
         return this.dbAdapter.get(
             "SELECT count(id) as cnt FROM participants WHERE discord_user_id = ?1 AND discord_guild_id = ?2",
