@@ -1,8 +1,8 @@
 # Pidor bot
-Охуенная игра для настоящих мужчин. Добавь на свой сервер и начинай прямо сейчас, если у тебя есть яйца.
+Только для настоящих мужчин.
 
 ## Invite link
-https://discordapp.com/oauth2/authorize?&client_id=463392133051580418&scope=bot&permissions=0
+https://discordapp.com/oauth2/authorize?&client_id=894788466636914699&scope=bot&permissions=0
 
 ## Правила
 1) Добавить себя в список участников можно командой **!пидордня**.
